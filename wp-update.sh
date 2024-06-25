@@ -418,10 +418,10 @@ if ! wp core is-installed --path="$CURRENT_PATH" --allow-root 2> /dev/null; then
 	exit 1
 fi
 
-readonly ENV_BACKUP_PATH="WP_UPDATE_BACKUP_PATH_$CURRENT_DIR";
-
+#
+# readonly ENV_BACKUP_PATH="WP_UPDATE_BACKUP_PATH_$CURRENT_DIR";
 # Check if the backup path enviroment variable was set.
-if [[ -z "${!ENV_BACKUP_PATH}" ]]; then
+# if [[ -z "${!ENV_BACKUP_PATH}" ]]; then
 	# Not set, use parent directory as a backup path
 	readonly PARENT_PATH="$(dirname "$CURRENT_PATH")"
 
@@ -438,11 +438,11 @@ if [[ -z "${!ENV_BACKUP_PATH}" ]]; then
 		printf "Backup path: %s\n" "$BACKUP_PATH"
 	fi
 
-else
-	# Backup path enviroment variable is set.
-	readonly BACKUP_PATH="${!ENV_BACKUP_PATH}"
-	printf "Backup path (from environment variable): %s\n" "$BACKUP_PATH"
-fi
+# else
+# 	# Backup path enviroment variable is set.
+# 	readonly BACKUP_PATH="${!ENV_BACKUP_PATH}"
+# 	printf "Backup path (from environment variable): %s\n" "$BACKUP_PATH"
+# fi
 
 # Check if backup path exists.
 if ! is_dir "$BACKUP_PATH"; then
