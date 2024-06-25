@@ -40,6 +40,7 @@ chmod +x wp-update.sh
 ```bash
 mv wp-update.sh /usr/local/bin/wp-update
 ```
+
 4 Run `wp-update --help` to see if the WP Update script was installed successfully. You should [see something like this](https://github.com/keesiemeijer/wp-update/wiki/Options)
 
 ## Usage
@@ -69,7 +70,7 @@ wp-update path/to/my/website --plugins --themes
 
 ## Backups
 
-Backups are only created when something is updated. Newer backups replace previous backups as not to clutter your website. 
+Backups are only created when something is updated. Newer backups replace previous backups as not to clutter your website.
 
 * The `plugins` and `themes` folder backups are made before updating plugins or themes.
 * Database backups are created before and after updating.
@@ -82,17 +83,19 @@ The backup directory ***should not be publicly accessible***.
 
 That's why backups are saved outside the website path you provide in `<path/to/website>`. In most cases this will fix the public access issue.
 
-Before updating a backup directory called `wp-update-backups` is created if it doesn't exist yet. 
+Before updating a backup directory called `wp-update-backups` is created if it doesn't exist yet.
 
 For example, if you've used this command:
+
 ```
 wp-update domains/my-site
 ```
+
 The backup directory is created at `domains/wp-update-backups`.
 
 You can set a [custom backup path](https://github.com/keesiemeijer/wp-update#custom-backup-path) for each site if there are permission issues or if the location is still publicly accessible.
 
-## Custom backup path
+## Custom backup path (disabled for this fork)
 
 Add custom backup paths with environment variables in your `.bashrc` or `.bash_profile` file.
 
@@ -104,4 +107,4 @@ export WP_UPDATE_BACKUP_PATH_my-awesome-site=/custom/path/to/backups/my-awesome-
 
 As you can see the environment variable consists of `WP_UPDATE_BACKUP_PATH_` and the site directory `my-awesome-site`. The custom path that will be used for this site is now `/custom/path/to/backups/my-awesome-site`. It's recommended this directory is not publicly accessible. This directory must exist on your server for the path to be used.
 
-After adding the custom backup path you'll need to quit the terminal and log back in to your server via SSH before the environment variable is used. 
+After adding the custom backup path you'll need to quit the terminal and log back in to your server via SSH before the environment variable is used.
