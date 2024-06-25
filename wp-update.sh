@@ -2,83 +2,83 @@
 
 # =============================================================================
 # DESCRIPTION
-# 
+#
 # A bash script to update WordPress core, plugins, themes and comments via SSH.
-# 
+#
 # Author: keesiemeijer
 # Github: https://github.com/keesiemeijer/wp-update
-# 
+#
 # Features:
 #     All updates are displayed before updating
 #     Interactive prompts keeps you in control of what gets updated
 #     Database and file backups (plugins, themes) are created when updates are made
 #     Manage spam and trash comments
-# 
+#
 # =============================================================================
 
 # =============================================================================
 # REQUIREMENTS
-# 
+#
 #     WP-CLI
 #     SSH access to the server.
-#     
+#
 # The command `wp` should be executable and in your PATH (e.g. /usr/local/bin/).
 # See the installation instructions for WP-CLI: http://wp-cli.org/#installing
-# 
-# If you have permission issues or have trouble moving files in your `PATH` 
+#
+# If you have permission issues or have trouble moving files in your `PATH`
 # see https://stackoverflow.com/a/14650235
 # =============================================================================
 
 # =============================================================================
 # INSTALLATION
-# 
+#
 # 1 log in your server via SSH and download the `wp-update.sh` file.
 # curl -o wp-update.sh https://raw.githubusercontent.com/keesiemeijer/wp-update/master/wp-update.sh
-# 
+#
 # 2 Make the `wp-update.sh` file executable.
 # chmod +x wp-update.sh
-# 
+#
 # 3 Move it in your `PATH` (e.g /usr/local/bin/) and rename it to `wp-update`.
 # mv wp-update.sh /usr/local/bin/wp-update
-# 
+#
 # 4 Use "wp-update --help" to see if the this script was installed successfully.
 # ============================================================================
 
 # =============================================================================
 # USAGE
-# 
+#
 #     wp-update <path/to/website> [option...]
-# 
+#
 # Relative or full path to a WordPress Site
 # Use "wp-update --help" to see what options are available
-# 
+#
 # Without options the option `--all` is used. Example:
-# 
+#
 #     wp-update <path/to/website>
-# 
+#
 # Example to update plugins and themes only:
-#    
+#
 #    wp-update <path/to/website> --plugins --themes
-# 
+#
 # **Note**: Check your website if your site was updated!
 # =============================================================================
 
 # =============================================================================
 # BACKUPS
-# 
+#
 # Backups are only created when something is updated.
 # Newer backups replace previous backups as to not clutter your website.
 # The `plugins` and `themes` folder backups are created before updating plugins or themes.
 # Database backups are created before and after updating.
 # The backup directory `wp-update-backups` is saved in the parent directory of the site directory
-# 
+#
 # If you have permission issues you can set a custom backup directory in a config file.
 # See the documentation
-# 
-# **Note**: The backup directory should not be publicly accessible. 
+#
+# **Note**: The backup directory should not be publicly accessible.
 #           If it's publicly accessible you can  set a custom backup directory location in a config file.
 #           See the documentation.
-# 
+#
 # **Note**: Test the database backups made by this script before you rely on this feature.
 # =============================================================================
 
@@ -205,7 +205,7 @@ function update_language(){
 function update_asset(){
 	local asset_type=$1
 	local asset_path update
-	
+
 	asset_path=$(wp "$asset_type" path --path="$CURRENT_PATH" --allow-root)
 
 	printf "Checking %s updates...\n" "$asset_type"
@@ -422,7 +422,7 @@ readonly ENV_BACKUP_PATH="WP_UPDATE_BACKUP_PATH_$CURRENT_DIR";
 
 # Check if the backup path enviroment variable was set.
 if [[ -z "${!ENV_BACKUP_PATH}" ]]; then
-	# Not set, use parent directory as a backup path 
+	# Not set, use parent directory as a backup path
 	readonly PARENT_PATH="$(dirname "$CURRENT_PATH")"
 
 	if ! is_dir "$PARENT_PATH"; then
@@ -437,7 +437,7 @@ if [[ -z "${!ENV_BACKUP_PATH}" ]]; then
 	else
 		printf "Backup path: %s\n" "$BACKUP_PATH"
 	fi
-	
+
 else
 	# Backup path enviroment variable is set.
 	readonly BACKUP_PATH="${!ENV_BACKUP_PATH}"
@@ -457,7 +457,7 @@ fi
 
 # Update everything except translations.
 for type in "${ALLOPTIONS[@]}"
-do  
+do
 	case "$type" in
 			plugins)
 				update_asset "plugin"
